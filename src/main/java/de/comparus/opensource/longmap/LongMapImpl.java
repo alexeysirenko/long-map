@@ -1,9 +1,6 @@
 package de.comparus.opensource.longmap;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * LongMap implementation. Mutable.
@@ -11,7 +8,7 @@ import java.util.List;
 public class LongMapImpl<V> implements LongMap<V> {
 
     /**
-     * Size of a hash table.
+     * Default size of a hash table.
      */
     private int HASH_TABLE_SIZE = 4096;
 
@@ -24,7 +21,16 @@ public class LongMapImpl<V> implements LongMap<V> {
      * Creates a map instance.
      */
     public LongMapImpl() {
-        init();
+        init(HASH_TABLE_SIZE);
+    }
+
+    /**
+     * Creates a map with specified size of a hash table.
+     *
+     * @param size size of a hash table
+     */
+    public LongMapImpl(int size) {
+        init(size);
     }
 
     /**
@@ -226,7 +232,7 @@ public class LongMapImpl<V> implements LongMap<V> {
      * Removes all of the mappings from this map.
      */
     public void clear() {
-        init();
+        init(hashTable != null ? hashTable.size() : HASH_TABLE_SIZE);
     }
 
     public String toString() {
@@ -246,8 +252,8 @@ public class LongMapImpl<V> implements LongMap<V> {
     /**
      * Initializes a hash table
      */
-    private void init() {
-        hashTable = new ArrayList<>(HASH_TABLE_SIZE);
+    private void init(int size) {
+        hashTable = new ArrayList<>(Collections.nCopies(size, null));
     }
 
     /**
